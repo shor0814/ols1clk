@@ -2025,61 +2025,62 @@ function befor_install_display
 {
     echo
     echoCYAN "Starting to install OpenLiteSpeed to $SERVER_ROOT/ with the parameters below,"
-    echoY "WebAdmin Console URL:     " "https://$(curl -s http://checkip.amazonaws.com || printf "0.0.0.0"):$ADMINPORT"
-    echoY "WebAdmin username:        " "$ADMINUSER"
-    echoY "WebAdmin password:        " "$ADMINPASSWORD"
-    echoY "WebAdmin email:           " "$EMAIL"
-    echoY "LSPHP version:            " "$LSPHPVER"
+    echoY "IPV4 WebAdmin Console URL:     " "https://$(curl -4 -s --connect-timeout 5 http://checkip.amazonaws.com || printf "0.0.0.0"):$ADMINPORT"
+    echoY "IPV6 WebAdmin Console URL:     " "https://[$(curl -6 -s --connect-timeout 5 http://icanhazip.com || printf "0.0.0.0")]:$ADMINPORT"
+    echoY "WebAdmin username:             " "$ADMINUSER"
+    echoY "WebAdmin password:             " "$ADMINPASSWORD"
+    echoY "WebAdmin email:                " "$EMAIL"
+    echoY "LSPHP version:                 " "$LSPHPVER"
     if [ ${WITH_MYSQL} = 0 ] && [ "${PURE_MYSQL}" = 0 ] && [ "${WITH_PERCONA}" = 0 ] && [ "${PURE_PERCONA}" = 0 ] && [ "${PURE_DB}" = 0 ]; then 
         if [ ${INSTALLWORDPRESS} = 1 ]; then
-            echoY "MariaDB version:          " "$MARIADBVER"
+            echoY "MariaDB version:               " "$MARIADBVER"
         fi
     elif [ "${PURE_DB}" = 1 ]; then
-        echoY "MariaDB version:          " "$MARIADBVER"
-        echoY "MariaDB root Password:    " "$ROOTPASSWORD"    
+        echoY "MariaDB version:               " "$MARIADBVER"
+        echoY "MariaDB root Password:         " "$ROOTPASSWORD"    
     elif [ "${PURE_MYSQL}" = 1 ]; then 
-        echoY "MySQL version:            " "$MYSQLVER"
-        echoY "MySQL root Password:      " "$ROOTPASSWORD"
+        echoY "MySQL version:                 " "$MYSQLVER"
+        echoY "MySQL root Password:           " "$ROOTPASSWORD"
     elif [ "${PURE_PERCONA}" = 1 ]; then 
-        echoY "PERCONA version:          " "$PERCONAVER"
-        echoY "PERCONA root Password:    " "$ROOTPASSWORD"        
+        echoY "PERCONA version:               " "$PERCONAVER"
+        echoY "PERCONA root Password:         " "$ROOTPASSWORD"        
     elif [ "${WITH_PERCONA}" = 1 ]; then 
-        echoY "PERCONA version:          " "$PERCONAVER"     
+        echoY "PERCONA version:               " "$PERCONAVER"     
     elif [ "${WITH_MYSQL}" = 1 ]; then   
-        echoY "MySQL version:            " "$MYSQLVER"
+        echoY "MySQL version:                 " "$MYSQLVER"
     fi
 
     if [ "$INSTALLWORDPRESS" = "1" ] ; then
-        echoY "Install WordPress:        " Yes
-        echoY "WordPress HTTP port:      " "$WPPORT"
-        echoY "WordPress HTTPS port:     " "$SSLWPPORT"
-        echoY "WordPress language:       " "$WPLANGUAGE"        
-        echoY "Web site domain:          " "$SITEDOMAIN"
-        echoY "MySQL root Password:      " "$ROOTPASSWORD"
-        echoY "Database name:            " "$DATABASENAME"
-        echoY "Database username:        " "$USERNAME"
-        echoY "Database password:        " "$USERPASSWORD"
+        echoY "Install WordPress:             " Yes
+        echoY "WordPress HTTP port:           " "$WPPORT"
+        echoY "WordPress HTTPS port:          " "$SSLWPPORT"
+        echoY "WordPress language:            " "$WPLANGUAGE"        
+        echoY "Web site domain:               " "$SITEDOMAIN"
+        echoY "MySQL root Password:           " "$ROOTPASSWORD"
+        echoY "Database name:                 " "$DATABASENAME"
+        echoY "Database username:             " "$USERNAME"
+        echoY "Database password:             " "$USERPASSWORD"
 
         if [ "$INSTALLWORDPRESSPLUS" = "1" ] ; then
-            echoY "WordPress plus:           " Yes
-            echoY "WordPress site title:     " "$WPTITLE"
-            echoY "WordPress username:       " "$WPUSER"
-            echoY "WordPress password:       " "$WPPASSWORD"
+            echoY "WordPress plus:                " Yes
+            echoY "WordPress site title:          " "$WPTITLE"
+            echoY "WordPress username:            " "$WPUSER"
+            echoY "WordPress password:            " "$WPPASSWORD"
         else
-            echoY "WordPress plus:           " No
+            echoY "WordPress plus:                " No
         fi
 
 
         if [ -e "$WORDPRESSPATH/wp-config.php" ] ; then
-            echoY "WordPress location:       " "$WORDPRESSPATH (Exsiting)"
+            echoY "WordPress location:            " "$WORDPRESSPATH (Exsiting)"
             WORDPRESSINSTALLED=1
         else
-            echoY "WordPress location:       " "$WORDPRESSPATH (New install)"
+            echoY "WordPress location:            " "$WORDPRESSPATH (New install)"
             WORDPRESSINSTALLED=0
         fi
     else
-        echoY "Server HTTP port:         " "$WPPORT"
-        echoY "Server HTTPS port:        " "$SSLWPPORT"
+        echoY "Server HTTP port:              " "$WPPORT"
+        echoY "Server HTTPS port:             " "$SSLWPPORT"
     fi
     echoNW "Your password will be written to file:  ${PWD_FILE}"
     echo 
