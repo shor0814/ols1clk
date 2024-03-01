@@ -1742,9 +1742,24 @@ secure                  0
 map                     wordpress $SITEDOMAIN
 }
 
+listener wordpress IPV6 {
+address                 [ANY]:$WPPORT
+secure                  0
+map                     wordpress $SITEDOMAIN
+}
+
 
 listener wordpressssl {
 address                 *:$SSLWPPORT
+secure                  1
+map                     wordpress $SITEDOMAIN
+keyFile                 $SERVER_ROOT/conf/$KEY
+certFile                $SERVER_ROOT/conf/$CERT
+}
+
+
+listener wordpressssl IPV6 {
+address                 [ANY]:$SSLWPPORT
 secure                  1
 map                     wordpress $SITEDOMAIN
 keyFile                 $SERVER_ROOT/conf/$KEY
